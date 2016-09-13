@@ -3,24 +3,24 @@ const express = require('express'),
 	monk = require('monk'),
 	multer = require('multer'),
 	bodyParser = require('body-parser'),
-	imgur = require('imgur');
+	imgur = require('imgur'),
+	exphbs  = require('express-handlebars');
 
 require('dotenv').config();
 
-const  url = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME,
-	db = monk(url);
-
-app.use('/public', express.static('public'));
+const
+	db = monk('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME),
+	images = db.get('images'),
+	
+	upload = multer({ storage: multer.memoryStorage({}) });
 
 app.use(bodyParser.urlencoded({
   extended: true
-})); 
+}));
 
-var upload = multer({ storage: multer.memoryStorage({}) });
+app.use('/public', express.static('public'));
 
 imgur.setClientId(process.env.IMGUR_CLIENTID);
-
-const images = db.get('images');
 
 app.get('/',function(req, res){
 	images.find({})
