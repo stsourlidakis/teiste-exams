@@ -30,7 +30,7 @@ app.use('/public', express.static('public'));
 imgur.setClientId(process.env.IMGUR_CLIENTID);
 
 app.get('/',function(req, res){
-	images.find({}, {fields: {url: 1, tags: 1, _id: 0}})
+	images.find({}, {fields: {url: 1, tags: 1, _id: 0}, sort: {_id: -1}})
 		.then((docs)=>{
 			res.render('home', {data: docs});
 		})
