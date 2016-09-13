@@ -18,14 +18,18 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
 app.use('/public', express.static('public'));
 
 imgur.setClientId(process.env.IMGUR_CLIENTID);
 
 app.get('/',function(req, res){
-	images.find({})
+	images.find({}, {fields: {url: 1, tags: 1, _id: 0}})
 		.then((docs)=>{
-			res.json(docs);
+			console.log(docs);
+			res.render('home', {data: docs});
 		})
 		.catch((err)=>{
 			res.send(err);
