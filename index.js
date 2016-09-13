@@ -56,31 +56,29 @@ app.get('/insert/sample',function(req, res){
 		});
 });
 
-app.post('/upload', upload.single('image'), function(req, res){
+app.route('/upload')
+	.get(function(req, res){
+		res.render('upload');
+	})
+	.post(upload.single('image'), function(req, res){
 	const albumId = 'mnVUvevYnrhvxq0';	//inf
 	imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
     .then(function (imgurRes) {
-        images.insert({
+        return images.insert({
 			'url': imgurRes.data.link,
 			'deleteUrl': imgurRes.data.deletehash,
 			'tags': req.body.tags.split(','),
 			'reports': 0,
 			'active': true,
 			'uploader': 'anon',
-		})
-		.then((docs)=>{
-			res.json(docs);
-		})
-		.catch((err) => {
-			res.send(err);
 		});
     })
+	.then((docs)=>{
+		res.render('upload', {resultMessage: 'Uploaded!'});
+	})
     .catch(function (err) {
-		res.send ( err.message );
+		res.render('upload', {resultMessage: 'Failed!'});
     });
-});
-app.get('/upload',function(req, res){
-	res.render('upload');
 });
 
 app.listen(2095, function () {
