@@ -18,7 +18,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+var hbs = exphbs.create({
+    defaultLayout: 'main',
+    partialsDir: ['views/partials/']
+});
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use('/public', express.static('public'));
@@ -28,7 +32,6 @@ imgur.setClientId(process.env.IMGUR_CLIENTID);
 app.get('/',function(req, res){
 	images.find({}, {fields: {url: 1, tags: 1, _id: 0}})
 		.then((docs)=>{
-			console.log(docs);
 			res.render('home', {data: docs});
 		})
 		.catch((err)=>{
@@ -75,6 +78,9 @@ app.post('/upload', upload.single('image'), function(req, res){
     .catch(function (err) {
 		res.send ( err.message );
     });
+});
+app.get('/upload',function(req, res){
+	res.render('upload');
 });
 
 app.listen(2095, function () {
