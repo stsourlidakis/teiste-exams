@@ -2,7 +2,8 @@ const express = require('express'),
 	app = express(),
 	monk = require('monk');
 
-const  url = 'localhost:27017/teilam-themata',
+require('dotenv').config();
+const  url = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME,
 	db = monk(url);
 
 const images = db.get('images');
