@@ -81,6 +81,7 @@ app.route('/upload')
     });
 });
 
-app.listen(2095, function () {
-	console.log('Api listening on port 2095!');
+const port = process.env.PORT || 80;
+app.listen(port, function () {
+	console.log('App listening on port '+port+'!');
 });
