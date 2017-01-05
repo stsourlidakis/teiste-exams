@@ -4,7 +4,8 @@ const express = require('express'),
 	multer = require('multer'),
 	bodyParser = require('body-parser'),
 	imgur = require('imgur'),
-	exphbs  = require('express-handlebars');
+	exphbs = require('express-handlebars'),
+	courses = require('./lib/courses');
 
 require('dotenv').config();
 
@@ -15,12 +16,12 @@ const
 	upload = multer({ storage: multer.memoryStorage({}) });
 
 app.use(bodyParser.urlencoded({
-  extended: true
+	extended: true
 }));
 
 var hbs = exphbs.create({
-    defaultLayout: 'main',
-    partialsDir: ['views/partials/']
+	defaultLayout: 'main',
+	partialsDir: ['views/partials/']
 });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -58,28 +59,29 @@ app.get('/insert/sample',function(req, res){
 
 app.route('/upload')
 	.get(function(req, res){
-		res.render('upload');
+		res.render('upload', {courses: courses.all});
 	})
 	.post(upload.single('image'), function(req, res){
-	const albumId = 'mnVUvevYnrhvxq0';	//inf
-	imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
-    .then(function (imgurRes) {
-        return images.insert({
-			'url': imgurRes.data.link,
-			'deleteUrl': imgurRes.data.deletehash,
-			'tags': req.body.tags.split(','),
-			'reports': 0,
-			'active': true,
-			'uploader': 'anon',
-		});
-    })
-	.then((docs)=>{
-		res.render('upload', {resultMessage: 'Uploaded!'});
-	})
-    .catch(function (err) {
-		res.render('upload', {resultMessage: 'Failed!'});
-    });
-});
+		const albumId = 'mnVUvevYnrhvxq0';	//inf
+		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
+			.then(function (imgurRes) {
+				return images.insert({
+					'url': imgurRes.data.link,
+					'deleteUrl': imgurRes.data.deletehash,
+					'course': req.body.course,
+					'year': req.body.year,
+					'reports': 0,
+					'active': true,
+					'uploader': 'anon',
+				});
+			})
+			.then((docs)=>{
+				res.render('upload', {resultMessage: 'Uploaded!'});
+			})
+			.catch(function (err) {
+				res.render('upload', {resultMessage: 'Failed!'});
+			});
+	});
 
 const port = process.env.PORT || 80;
 app.listen(port, function () {
