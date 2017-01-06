@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +18,8 @@
     "imgur": "^0.2.0",
     "monk": "^3.1.2",
     "multer": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
