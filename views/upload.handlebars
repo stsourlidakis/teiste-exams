@@ -1,15 +1,15 @@
 <fieldset>
 	<legend>Upload</legend>
 	<form method="post" action="/upload" enctype="multipart/form-data">
-		<input type="file" name="image" />
+		<input type="file" name="image" required autocomplete="off" />
 		<br>
-		<input autocomplete="off" name="course" placeholder="Μάθημα" list="coursesList" class="course-input" />
+		<input name="course" placeholder="Μάθημα" list="coursesList" class="course-input" required autocomplete="off" />
 		<datalist id="coursesList">
 		{{#each courses}}
 			<option>{{this}}</option>
 		{{/each}}
 		</datalist>
-		<select name="year">
+		<select name="year" required>
 			<option value="2010">2010</option>
 			<option value="2011">2011</option>
 			<option value="2012">2012</option>
