@@ -55,7 +55,7 @@ app.route('/upload')
 	})
 	.post(utils.checkUploadedFile, utils.checkRequiredInputs, utils.checkPhotoContent, function(req, res){
 
-		const albumId = 'mnVUvevYnrhvxq0';	//inf
+		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH; //delete hash because the album is anonymous
 		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
 		.then(function (imgurRes) {
 			return images.insert({
@@ -65,18 +65,19 @@ app.route('/upload')
 				'year': req.body.year,
 				'reports': 0,
 				'active': true,
-				'uploader': 'anon',
+				'uploader': utils.settings.defaultUploaderName,
 			});
 		})
 		.then((docs)=>{
 			res.render('upload', {error: false, resultMessage: 'Uploaded!'});
 		})
 		.catch(function (err) {
+			console.log(err);
 			res.render('upload', {error: true, resultMessage: 'Failed!'});
 		});
 	});
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || utils.settings.defaultPort;
 app.listen(port, function () {
 	console.log('App listening on port '+port+'!');
 });
