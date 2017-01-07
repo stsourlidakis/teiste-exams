@@ -1,22 +1,17 @@
 const express = require('express'),
 	app = express(),
 	monk = require('monk'),
-	multer = require('multer'),
 	bodyParser = require('body-parser'),
 	imgur = require('imgur'),
 	exphbs = require('express-handlebars'),
+	utils = require('./lib/utils');
 	courses = require('./lib/courses');
 
 require('dotenv').config();
 
 const
 	db = monk('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME),
-	images = db.get('images'),
-	
-	upload = multer({ 
-		storage: multer.memoryStorage({}),
-		limits: {fileSize: 10000000}, //fileSize in bytes
-	}).single('image');
+	images = db.get('images');
 
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -64,45 +59,26 @@ app.route('/upload')
 	.get(function(req, res){
 		res.render('upload', {courses: courses.all});
 	})
-	.post(function(req, res){
-		upload(req, res, function (err) {
-			let errorMsg;
-			if(err){
-				if(err.code == 'LIMIT_FILE_SIZE'){
-					errorMsg = 'File too big. Max filesize: 10MB';
-				} else {
-					errorMsg = 'Something went wrong';
-				}
-			} else if(!req.file){
-				errorMsg = 'Image not found';
-			} else if(req.file.mimetype.indexOf('image') == -1){
-				errorMsg = 'The file is not an image';
-			}
-
-			if(errorMsg != undefined){
-				res.render('upload', {error: true, resultMessage: errorMsg});
-			} else {
-				const albumId = 'mnVUvevYnrhvxq0';	//inf
-				imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
-				.then(function (imgurRes) {
-					return images.insert({
-						'url': imgurRes.data.link,
-						'deleteUrl': imgurRes.data.deletehash,
-						'course': req.body.course,
-						'year': req.body.year,
-						'reports': 0,
-						'active': true,
-						'uploader': 'anon',
-					});
-				})
-				.then((docs)=>{
-					res.render('upload', {error: false, resultMessage: 'Uploaded!'});
-				})
-				.catch(function (err) {
-					res.render('upload', {error: true, resultMessage: 'Failed!'});
-				});
-			}
+	.post(utils.checkUploadedFile, function(req, res){
+		const albumId = 'mnVUvevYnrhvxq0';	//inf
+		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
+		.then(function (imgurRes) {
+			return images.insert({
+				'url': imgurRes.data.link,
+				'deleteUrl': imgurRes.data.deletehash,
+				'course': req.body.course,
+				'year': req.body.year,
+				'reports': 0,
+				'active': true,
+				'uploader': 'anon',
+			});
 		})
+		.then((docs)=>{
+			res.render('upload', {error: false, resultMessage: 'Uploaded!'});
+		})
+		.catch(function (err) {
+			res.render('upload', {error: true, resultMessage: 'Failed!'});
+		});
 	});
 
 const port = process.env.PORT || 80;
