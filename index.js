@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express'),
 	app = express(),
 	monk = require('monk'),
@@ -6,8 +7,6 @@ const express = require('express'),
 	exphbs = require('express-handlebars'),
 	utils = require('./lib/utils');
 	courses = require('./lib/courses');
-
-require('dotenv').config();
 
 const
 	db = monk('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME),
@@ -59,7 +58,7 @@ app.route('/upload')
 	.get(function(req, res){
 		res.render('upload', {courses: courses.all});
 	})
-	.post(utils.checkUploadedFile, function(req, res){
+	.post(utils.checkUploadedFile, utils.checkPhotoContent, function(req, res){
 		const albumId = 'mnVUvevYnrhvxq0';	//inf
 		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
 		.then(function (imgurRes) {
