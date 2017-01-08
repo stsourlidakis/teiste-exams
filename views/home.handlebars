@@ -1,7 +1,40 @@
-	<h1>Μηχανικών Πληροφορικής, ΤΕΙ Στερεάς Ελλαδας</h1>
-	<div class="image_list">
-	  {{#each data}}
-		<div>{{this.tags}}</div>
-		<div><img src="{{this.url}}"></div>
-	  {{/each}}
+<div class="container">
+	<h1 class="text-center">Μηχανικών Πληροφορικής, ΤΕΙ Στερεάς Ελλαδας</h1>
+	<div class="well">
+		<div class="input-group col-md-6 col-md-offset-3">
+			<input type="text" class="form-control input-lg" placeholder="Όνομα μαθήματος" />
+			<span class="input-group-addon">
+				<i class="fa fa-search"></i>
+			</span>
+		</div>
 	</div>
+	<div class="well">
+		<div class="row text-center">
+			{{#each semesters as |semester|}}
+			<div class="semester col-xs-12">
+				<h3 class="col-xs-12">{{semester.name}}</h3>
+				{{#each semester.courses as |course|}}
+				<div class="course well col-sm-4" data-tags="{{course.searchStr}}">
+					<div class="row">
+						<div class="courseHeader col-xs-12">
+							<span class="courseName">{{course.name}}</span>
+							<div class="pull-right">
+								<span class="badge">{{course.items}}</span>
+								<button class="btn btn-success yearListToggle">
+									<i class="fa fa-caret-down" aria-hidden="true"></i>
+								</button>
+							</div>
+						</div>
+						<ul class="yearList initHidden col-xs-12 list-group">
+						{{#each course.itemsForYear}}
+							<li class="list-group-item"><a href="/semester/{{semester.key}}/course/{{course.key}}/year/{{@key}}">{{@key}} <span class="badge">{{this}}</span></a></li>
+						{{/each}}
+						</ul>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</div>

@@ -1,15 +1,13 @@
 require('dotenv').config();
 const express = require('express'),
 	app = express(),
-	monk = require('monk'),
 	imgur = require('imgur'),
 	exphbs = require('express-handlebars'),
-	utils = require('./lib/utils');
+	utils = require('./lib/utils'),
 	courses = require('./lib/courses');
 
-const
-	db = monk('mongodb://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'/'+process.env.DB_NAME),
-	images = db.get('images');
+const images = utils.db.get('images'),
+	semesters = utils.db.get('semesters');
 
 var hbs = exphbs.create({
 	defaultLayout: 'main',
@@ -23,13 +21,13 @@ app.use('/public', express.static('public'));
 imgur.setClientId(process.env.IMGUR_CLIENTID);
 
 app.get('/',function(req, res){
-	images.find({}, {fields: {url: 1, tags: 1, _id: 0}, sort: {_id: -1}})
-		.then((docs)=>{
-			res.render('home', {data: docs});
-		})
-		.catch((err)=>{
-			res.send(err);
-		});
+	semesters.find({})
+	.then((docs)=>{
+		res.render('home', {semesters: docs});
+	})
+	.catch((err)=>{
+		res.send(err);
+	});
 });
 
 app.get('/insert/sample',function(req, res){

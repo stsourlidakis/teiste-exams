@@ -2,19 +2,30 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script>
 <script>
-	var comboplete = new Awesomplete('input.course-input', {
-		minChars: 0,
-	});
-	Awesomplete.$('.course-input').addEventListener("click", function() {
-		if (comboplete.ul.childNodes.length === 0) {
-			comboplete.minChars = 0;
-			comboplete.evaluate();
-		}
-		else if (comboplete.ul.hasAttribute('hidden')) {
-			comboplete.open();
-		}
-		else {
-			comboplete.close();
+	$(document).ready(function(){
+		/* year list toggle */
+		$('.yearListToggle').on('click', function(){
+			$(this).children('.fa').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
+			$(this).closest('.course').find('.yearList').fadeToggle();
+		});
+
+		/* courses autocomplete */
+		if($('input.course-input').length!=0){
+			var comboplete = new Awesomplete('input.course-input', {
+				minChars: 0,
+			});
+			Awesomplete.$('.course-input').addEventListener("click", function() {
+				if (comboplete.ul.childNodes.length === 0) {
+					comboplete.minChars = 0;
+					comboplete.evaluate();
+				}
+				else if (comboplete.ul.hasAttribute('hidden')) {
+					comboplete.open();
+				}
+				else {
+					comboplete.close();
+				}
+			});
 		}
 	});
 </script>
