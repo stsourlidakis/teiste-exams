@@ -3,10 +3,10 @@
 	<form method="post" action="/upload" enctype="multipart/form-data">
 		<input type="file" name="image" required autocomplete="off" />
 		<br>
-		<input name="course" placeholder="Μάθημα" list="coursesList" class="course-input" required autocomplete="off" />
+		<input name="courseName" placeholder="Μάθημα" list="coursesList" class="course-input" required autocomplete="off" />
 		<datalist id="coursesList">
 		{{#each courses}}
-			<option>{{this}}</option>
+			<option value="{{this.name}}">{{this.name}}</option>
 		{{/each}}
 		</datalist>
 		<select name="year" required>

@@ -3,8 +3,7 @@ const express = require('express'),
 	app = express(),
 	imgur = require('imgur'),
 	exphbs = require('express-handlebars'),
-	utils = require('./lib/utils'),
-	courses = require('./lib/courses');
+	utils = require('./lib/utils');
 
 const images = utils.db.get('images'),
 	semesters = utils.db.get('semesters');
@@ -49,10 +48,9 @@ app.get('/insert/sample',function(req, res){
 
 app.route('/upload')
 	.get(function(req, res){
-		res.render('upload', {courses: courses.all});
+		res.render('upload', {courses: utils.courses.all});
 	})
 	.post(utils.checkUploadedFile, utils.checkRequiredInputs, utils.checkPhotoContent, function(req, res){
-
 		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH; //delete hash because the album is anonymous
 		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
 		.then(function (imgurRes) {
