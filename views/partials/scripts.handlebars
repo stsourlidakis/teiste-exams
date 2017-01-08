@@ -58,5 +58,20 @@
 				}
 			});
 		}
+
+		/* test the user submited course name before submiting the form */
+		$('#photoUploadForm').on('submit', function(){
+			var userCourseName = $('#courseNameInput').val();
+			var submit = false;
+			$('.courseAutocompleInput').each(function(){
+				if($(this).text() == userCourseName){
+					submit = true;
+				}
+			});
+			if(!submit){
+				$('#uploadResultMessage').addClass('.error').text('Επιλέξτε ένα μάθημα απο την λίστα');
+			}
+			return submit;
+		});
 	});
 </script>

@@ -57,7 +57,7 @@ app.route('/upload')
 			return images.insert({
 				'url': imgurRes.data.link,
 				'deleteUrl': imgurRes.data.deletehash,
-				'course': req.body.course,
+				'courseKey': utils.courses.getKeyFromName(req.body.courseName),
 				'year': req.body.year,
 				'reports': 0,
 				'active': true,
@@ -65,11 +65,11 @@ app.route('/upload')
 			});
 		})
 		.then((docs)=>{
-			res.render('upload', {error: false, resultMessage: 'Uploaded!'});
+			res.render('upload', {error: false, resultMessage: 'Uploaded!', courses: utils.courses.all});
 		})
 		.catch(function (err) {
 			console.log(err);
-			res.render('upload', {error: true, resultMessage: 'Failed!'});
+			res.render('upload', {error: true, resultMessage: 'Failed!', courses: utils.courses.all});
 		});
 	});
 
