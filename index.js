@@ -29,23 +29,6 @@ app.get('/',function(req, res){
 	});
 });
 
-app.get('/insert/sample',function(req, res){
-	images.insert({
-			'url':'http://i.imgur.com/2GZMNDS.jpg',
-			'deleteUrl':'http://imgur.com/some/delete/url',
-			'tags':['one', 'two', 'three'],
-			'reports': 0,
-			'active': true,
-			'uploader': 'anon'
-		})
-		.then((docs)=>{
-			res.json(docs);
-		})
-		.catch((err) => {
-			res.send(err);
-		});
-});
-
 app.route('/upload')
 	.get(function(req, res){
 		res.render('upload', {courses: utils.courses.all});
@@ -56,11 +39,10 @@ app.route('/upload')
 		.then(function (imgurRes) {
 			return images.insert({
 				'url': imgurRes.data.link,
-				'deleteUrl': imgurRes.data.deletehash,
+				'deleteHash': imgurRes.data.deletehash,
 				'courseKey': utils.courses.getKeyFromName(req.body.courseName),
 				'year': req.body.year,
-				'reports': 0,
-				'active': true,
+				'active': utils.settings.defaultImageActive,
 				'uploader': utils.settings.defaultUploaderName,
 			});
 		})
