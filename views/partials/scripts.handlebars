@@ -9,6 +9,12 @@
 			$(this).closest('.course').find('.yearList').fadeToggle();
 		});
 
+		/* index course search */
+		$('#courseFilterSearch').on('input propertychange', function(){
+			filterCoursesByStr($(this).val());
+			hideEmptySemesters();
+		});
+
 		/* courses autocomplete */
 		if($('input.course-input').length!=0){
 			var comboplete = new Awesomplete('input.course-input', {
@@ -24,6 +30,31 @@
 				}
 				else {
 					comboplete.close();
+				}
+			});
+		}
+
+		function filterCoursesByStr(str){
+			var courses = $('.course');
+			if(!/\S/.test(str)){	//if the string doesn't have any non-whitespace characters reset the view
+				courses.show();
+				return;
+			}
+			var filter = new RegExp(str, 'i');
+			courses.each(function(){
+				if(filter.test($(this).data('tags'))){
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			});
+		}
+
+		function hideEmptySemesters(){
+		// first we need to show everything because the parent's visibility affects child's :visible
+			$('.semester').show().each(function(){
+				if(!$(this).children('.course:visible').length>0){
+					$(this).hide();
 				}
 			});
 		}
