@@ -20,14 +20,22 @@
 							<span class="courseName">{{course.name}}</span>
 							<div class="pull-right">
 								<span class="badge">{{course.items}}</span>
+								{{#if  course.items}}
 								<button class="btn btn-success yearListToggle">
 									<i class="fa fa-caret-down" aria-hidden="true"></i>
 								</button>
+								{{else}}
+								<button class="btn btn-default yearListToggle" disabled>
+									<i class="fa fa-caret-down" aria-hidden="true"></i>
+								</button>
+								{{/if}}
 							</div>
 						</div>
 						<ul class="yearList initHidden col-xs-12 list-group">
 						{{#each course.itemsForYear}}
+							{{#if this}}
 							<li class="list-group-item"><a href="/semester/{{semester.key}}/course/{{course.key}}/year/{{@key}}">{{@key}} <span class="badge">{{this}}</span></a></li>
+							{{/if}}
 						{{/each}}
 						</ul>
 					</div>
