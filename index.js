@@ -34,19 +34,22 @@ app.route('/upload')
 		res.render('upload', {courses: utils.courses.all});
 	})
 	.post(utils.checkUploadedFile, utils.checkRequiredInputs, utils.checkPhotoContent, function(req, res){
-		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH; //delete hash because the album is anonymous
+		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH, //delete hash because the album is anonymous
+			courseKey = utils.courses.getKeyFromName(req.body.courseName);
+
 		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
 		.then(function (imgurRes) {
 			return images.insert({
 				'url': imgurRes.data.link,
 				'deleteHash': imgurRes.data.deletehash,
-				'courseKey': utils.courses.getKeyFromName(req.body.courseName),
+				'courseKey': courseKey,
 				'year': req.body.year,
 				'active': utils.settings.defaultImageActive,
 				'uploader': utils.settings.defaultUploaderName,
 			});
 		})
 		.then((docs)=>{
+			utils.incrementItemCountForCourse(courseKey, req.body.year);
 			res.render('upload', {error: false, resultMessage: 'Uploaded!', courses: utils.courses.all});
 		})
 		.catch(function (err) {
