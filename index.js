@@ -29,6 +29,16 @@ app.get('/',function(req, res){
 	});
 });
 
+app.get('/semester/:semester/course/:course/year/:year',function(req, res){
+	images.find({"courseKey": req.params.course, "year": req.params.year})
+	.then((docs)=>{
+		res.render('images', {images: docs});
+	})
+	.catch((err)=>{
+		res.send(err);
+	});
+});
+
 app.route('/upload')
 	.get(function(req, res){
 		res.render('upload', {courses: utils.courses.all});
