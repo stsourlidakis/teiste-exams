@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express'),
 	app = express(),
 	imgur = require('imgur'),
+	thumbnails = require('imgur-thumbnails'),
 	exphbs = require('express-handlebars'),
 	utils = require('./lib/utils');
 
@@ -78,6 +79,7 @@ app.route('/upload')
 		.then(function (imgurRes) {
 			return images.insert({
 				'url': imgurRes.data.link,
+				'thumbnailUrl': thumbnails.medium(imgurRes.data.link),
 				'deleteHash': imgurRes.data.deletehash,
 				'courseKey': courseKey,
 				'year': req.body.year,

@@ -16,6 +16,7 @@
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "imgur": "^0.2.0",
+    "imgur-thumbnails": "^1.1.0",
     "monk": "^3.1.2",
     "multer": "^1.2.0"
   },
