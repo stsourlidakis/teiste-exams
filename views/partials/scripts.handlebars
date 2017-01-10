@@ -53,7 +53,7 @@
 		function hideEmptySemesters(){
 		// first we need to show everything because the parent's visibility affects child's :visible
 			$('.semester').show().each(function(){
-				if(!$(this).children('.course:visible').length>0){
+				if(!$(this).find('.course:visible').length>0){
 					$(this).hide();
 				}
 			});
