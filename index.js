@@ -89,7 +89,7 @@ app.route('/upload')
 			});
 		})
 		.then((docs)=>{
-			utils.incrementItemCountForCourse(courseKey, req.body.year);
+			utils.courseItemIncrease(courseKey, req.body.year);
 			res.render('upload', {error: false, resultMessage: 'Uploaded!', courses: utils.courses.all});
 		})
 		.catch(function (err) {
