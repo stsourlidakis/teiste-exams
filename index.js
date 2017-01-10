@@ -70,6 +70,7 @@ app.route('/upload')
 				'deleteHash': imgurRes.data.deletehash,
 				'courseKey': courseKey,
 				'year': req.body.year,
+				'period': req.body.period,
 				'active': utils.settings.defaultImageActive,
 				'uploader': utils.settings.defaultUploaderName,
 			});
