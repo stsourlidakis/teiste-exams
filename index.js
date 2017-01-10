@@ -50,9 +50,16 @@ app.get('/about',function(req, res){
 });
 
 app.get('/semester/:semester/course/:course/year/:year',function(req, res){
-	images.find({"courseKey": req.params.course, "year": req.params.year})
+	images.find({"courseKey": req.params.course, "year": req.params.year, active: true})
 	.then((docs)=>{
-		res.render('images', {images: docs});
+		const metadata = {
+			courseName: utils.courses.getNameFromKey(req.params.course),
+			courseKey: req.params.course,
+			year: req.params.year?req.params.year:false,
+			count: docs.length
+		};
+
+		res.render('gallery', {meta: metadata, images: docs});
 	})
 	.catch((err)=>{
 		res.send(err);
