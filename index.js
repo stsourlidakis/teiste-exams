@@ -10,7 +10,23 @@ const images = utils.db.get('images'),
 
 var hbs = exphbs.create({
 	defaultLayout: 'main',
-	partialsDir: ['views/partials/']
+	partialsDir: ['views/partials/'],
+	helpers: {
+		ifGroupEveryOpen: function (index, every, options) {
+			if( index%every === 0 ){
+				return options.fn(this);
+			} else {
+				return options.inverse(this);
+			}
+		},
+		ifGroupEveryClose: function (index, every, options) {
+			if( options.data.last || (index + 1)%every === 0 ){
+				return options.fn(this);
+			} else {
+				return options.inverse(this);
+			}
+		}
+	}
 });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
