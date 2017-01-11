@@ -1,48 +1,46 @@
-<div class="container">
+<div class="container-fluid">
 	{{> mainTitle}}
-	<div class="well">
-		<div class="input-group col-md-6 col-md-offset-3">
-			<input type="text" id="courseFilterSearch" class="form-control input-lg" placeholder="Όνομα μαθήματος" autocomplete="off" />
-			<span class="input-group-addon">
-				<i class="fa fa-search"></i>
-			</span>
-		</div>
+	<div class="input-group col-md-6 col-md-offset-3">
+		<input type="text" id="courseFilterSearch" class="form-control input-lg" placeholder="Όνομα μαθήματος (Ελληνικά/Greeklish)" autocomplete="off" />
+		<span class="input-group-addon">
+			<i class="fa fa-search"></i>
+		</span>
 	</div>
-	<div class="well">
-		<div class="row text-center">
-			{{#each semesters as |semester|}}
-			<div class="semester col-xs-12">
-				<h3 class="col-xs-12">{{semester.name}}</h3>
+	<div class="row text-center">
+		{{#each semesters as |semester|}}
+		<div class="semester col-xs-12">
+			<h2 class="col-xs-12">{{semester.name}}</h2>
+			<div class="col-xs-12 semester-wrapper">
 				{{#each semester.courses as |course|}}
 
 				{{#ifGroupEveryOpen @index 3}}	<!-- opens a new row tag if needed -->
 				<div class="row">
 				{{/ifGroupEveryOpen}}
 				
-					<div class="course well col-sm-4" data-tags="{{course.searchStr}}">
+					<div class="course panel panel-default yearListToggle {{#if course.items}}withItems{{else}}noItems{{/if}} col-md-4" data-tags="{{course.searchStr}}">
 						<div class="row">
-							<div class="courseHeader col-xs-12">
+							<div class="courseHeader panel-title panel-heading col-xs-12">
 								<span class="courseName">{{course.name}}</span>
 								<div class="pull-right">
 									<span class="badge">{{course.items}}</span>
-									{{#if course.items}}
-									<button class="btn btn-success yearListToggle">
+									<span>
 										<i class="fa fa-caret-down" aria-hidden="true"></i>
-									</button>
-									{{else}}
-									<button class="btn btn-default yearListToggle" >
-										<i class="fa fa-caret-down" aria-hidden="true"></i>
-									</button>
-									{{/if}}
+									</span>
 								</div>
 							</div>
-							<ul class="yearList initHidden col-xs-12 list-group">
-							{{#each course.itemsForYear}}
-								{{#if this}}
-								<li class="list-group-item"><a href="/semester/{{semester.key}}/course/{{course.key}}/year/{{@key}}">{{@key}} <span class="badge">{{this}}</span></a></li>
+							<div class="yearList initHidden col-xs-12 panel-body">
+								<ul class="list-group">
+								{{#if course.items}}
+								{{#each course.itemsForYear}}
+									{{#if this}}
+									<a href="/semester/{{semester.key}}/course/{{course.key}}/year/{{@key}}"><li class="list-group-item year">{{@key}} <span class="badge">{{this}}</span></li></a>
+									{{/if}}
+								{{/each}}
+								{{else}}
+									<li class="list-group-item">Δεν υπάρχουν θέματα</li>
 								{{/if}}
-							{{/each}}
-							</ul>
+								</ul>
+							</div>
 						</div>
 					</div>
 
@@ -52,7 +50,7 @@
 
 				{{/each}}
 			</div>
-			{{/each}}
 		</div>
+		{{/each}}
 	</div>
 </div>
