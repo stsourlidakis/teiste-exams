@@ -4,8 +4,8 @@
 <script>
 	$(document).ready(function(){
 		/* year list toggle */
-		$('.yearListToggle').on('click', function(){
-			$(this).children('.fa').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
+		$('.yearListToggle .courseHeader').on('click', function(){
+			$(this).find('.fa').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
 			$(this).closest('.course').find('.yearList').fadeToggle();
 		});
 
@@ -19,6 +19,10 @@
 		if($('input.course-input').length!=0){
 			var comboplete = new Awesomplete('input.course-input', {
 				minChars: 0,
+				maxItems: 42,
+				sort: function(a, b){	//we want greek words first
+					return a.label[0]<b.label[0]?1:-1;
+				}
 			});
 			Awesomplete.$('.course-input').addEventListener("click", function() {
 				if (comboplete.ul.childNodes.length === 0) {
@@ -59,6 +63,11 @@
 			});
 		}
 
+		function replaceFormWithSpinner(){
+			$('#photoUploadForm').hide();
+			$('#afterSubmitLoader').show();
+		}
+
 		/* test the user submited course name before submiting the form */
 		$('#photoUploadForm').on('submit', function(){
 			var userCourseName = $('#courseNameInput').val();
@@ -70,6 +79,8 @@
 			});
 			if(!submit){
 				$('#uploadResultMessage').addClass('.error').text('Επιλέξτε ένα μάθημα απο την λίστα');
+			} else {
+				replaceFormWithSpinner();
 			}
 			return submit;
 		});

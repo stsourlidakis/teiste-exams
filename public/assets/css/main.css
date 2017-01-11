@@ -1,3 +1,7 @@
 .initHidden{
 	display: none;
 }
+
+.awesomplete{
+	display: block;
+}

@@ -1,30 +1,69 @@
 <div class="container">
 	{{> mainTitle}}
-	<form method="post" action="/upload" enctype="multipart/form-data" id="photoUploadForm">
-		<input type="file" name="image" required autocomplete="off" />
-		<br>
-		<input name="courseName" id="courseNameInput" placeholder="Μάθημα" list="coursesList" class="course-input" required autocomplete="off" />
-		<datalist id="coursesList">
-		{{#each courses}}
-			<option class="courseAutocompleInput">{{this.name}}</option>
-		{{/each}}
-		</datalist>
-		<select name="year" required>
-			<option value="2010">2010</option>
-			<option value="2011">2011</option>
-			<option value="2012">2012</option>
-			<option value="2013">2013</option>
-			<option value="2014">2014</option>
-			<option value="2015">2015</option>
-			<option value="2016">2016</option>
-		</select>
-		<select name="period">
-			<option value="Ιανουάριος">Ιανουάριος</option>
-			<option value="Ιούνιος">Ιούνιος</option>
-			<option value="Σεπτέμβριος">Σεπτέμβριος</option>
-		</select>
-		<br>
-		<input type="submit" value="upload" />
-	</form>
-	<div id="uploadResultMessage" class="{{#if error}}fail{{else}}success{{/if}}">{{resultMessage}}</div>
+	<form method="post" action="/upload" enctype="multipart/form-data" id="photoUploadForm" class="form-horizontal">
+		<fieldset class="col-md-8 col-md-offset-2">
+			<legend class="text-center">Ανέβασμα Θεμάτων</legend>
+			<div class="form-group">
+				<div id="uploadResultMessage" class="col-md-8 col-md-offset-2 label label-danger"></div>
+				<div class="col-md-8 col-md-offset-2 label label-{{#if error}}danger{{else}}success{{/if}}">{{resultMessage}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label">Φωτογραφία</label>
+				<div class=" col-md-6">
+					<label class="form-control">
+						<div class="col-md-12 text-center">
+							<span id="upload-file-info">Επιλογή Φωτογραφίας</span>
+							<input type="file" name="image" required autocomplete="off" id="inputImage" class="hidden" onchange="$('#upload-file-info').html($(this).val());"/>
+						</div>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="courseNameInput" class="col-md-4 control-label">Μάθημα</label>
+				<div class="col-md-6">
+					<input class="course-input form-control" name="courseName" id="courseNameInput" placeholder="Πληκτρολογείστε Ελληνικά ή Greeklish" type="text" list="coursesList" required autocomplete="off">
+					<datalist id="coursesList">
+					{{#each courses}}
+						<option class="courseAutocompleInput yoyo">{{this.name}}</option>
+						<option class="courseAutocompleInput" value="{{this.name}}">{{this.key}}</option>
+					{{/each}}
+					</datalist>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="select" class="col-md-4 control-label">Χρόνος</label>
+				<div class="col-md-6">
+					<select name="year" class="form-control" required>
+						<option value="2010">2010</option>
+						<option value="2011">2011</option>
+						<option value="2012">2012</option>
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="select" class="col-md-4 control-label">Μήνας</label>
+				<div class="col-md-6">
+					<select name="period" class="form-control" required>
+						<option value="Ιανουάριος">Ιανουάριος</option>
+						<option value="Ιούνιος">Ιούνιος</option>
+						<option value="Σεπτέμβριος">Σεπτέμβριος</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-primary">Αποστολή</button>
+				</div>
+			</div>
+		</form>
+	</fieldset>
+	<div class="col-xs-12 text-center initHidden" id="afterSubmitLoader">
+		<h2 class="col-xs-12">Παρακαλώ περιμένετε</h2>
+		<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+		<span class="sr-only">Loading...</span>
+	</div>
 </div>
