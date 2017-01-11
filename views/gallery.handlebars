@@ -1,7 +1,8 @@
 <div class="container">
+	{{> mainTitle}}
 	<div class="row">
 		<div class="col-xs-12">
-			<h1 class="text-center"><strong>{{meta.courseName}}</strong>{{#if meta.year}} {{meta.year}}{{/if}}</h1>
+			<h2 class="text-center"><strong>{{meta.courseName}}</strong>{{#if meta.year}} {{meta.year}}{{/if}}</h2>
 		</div>
 	</div>
 	{{#each images as |image|}}

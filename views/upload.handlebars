@@ -1,5 +1,5 @@
-<fieldset>
-	<legend>Upload</legend>
+<div class="container">
+	{{> mainTitle}}
 	<form method="post" action="/upload" enctype="multipart/form-data" id="photoUploadForm">
 		<input type="file" name="image" required autocomplete="off" />
 		<br>
@@ -27,4 +27,4 @@
 		<input type="submit" value="upload" />
 	</form>
 	<div id="uploadResultMessage" class="{{#if error}}fail{{else}}success{{/if}}">{{resultMessage}}</div>
-</fieldset>
+</div>
