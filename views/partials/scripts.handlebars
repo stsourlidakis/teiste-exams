@@ -84,5 +84,11 @@
 			}
 			return submit;
 		});
+
+		/* gallery image modal */
+		$(".imageModalInvoke").on("click", function() {
+			$('#imagePreview').attr('src', $(this).find('img').data('url'));
+			$('#imageModal').modal('show');
+		});
 	});
 </script>

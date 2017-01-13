@@ -6,7 +6,7 @@
 	cursor: not-allowed;
 }
 
-.withItems .courseHeader{
+.withItems .courseHeader, .imageModalInvoke{
 	cursor: pointer;
 }
 
@@ -28,7 +28,7 @@
 }
 .yearList .year:hover .badge{
 	background: #fff;
-	color: #333;
+	color: #2780E3;
 }
 
 .semester-wrapper{
