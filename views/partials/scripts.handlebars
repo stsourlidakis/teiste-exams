@@ -90,5 +90,15 @@
 			$('#imagePreview').attr('src', $(this).find('img').data('url'));
 			$('#imageModal').modal('show');
 		});
+
+		$('#inputImage').on('change', function(){
+			var filename = $(this).val();
+
+			if( filename.length>20 ){
+				filename = filename.slice(0, 10) + '...' + filename.slice(-10);
+			}
+
+			$('#upload-file-info').html(filename);
+		});
 	});
 </script>
