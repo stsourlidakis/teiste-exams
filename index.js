@@ -102,6 +102,15 @@ app.route('/upload')
 		});
 	});
 
+app.use(function (req, res, next) {	//default 404
+	if(utils.settings.log404){
+		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		utils.log404(req.originalUrl, ip);
+	}
+
+	res.status(404).render("404");
+});
+
 const port = process.env.PORT || utils.settings.defaultPort;
 app.listen(port, function () {
 	console.log('App listening on port '+port+'!');
