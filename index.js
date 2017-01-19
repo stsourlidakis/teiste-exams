@@ -50,6 +50,10 @@ app.get('/about',function(req, res){
 	res.render('about');
 });
 
+app.get('/contact',function(req, res){
+	res.render('contact');
+});
+
 app.get('/semester/:semester/course/:course/year/:year',function(req, res){
 	images.find({"courseKey": req.params.course, "year": req.params.year, active: true})
 	.then((docs)=>{
