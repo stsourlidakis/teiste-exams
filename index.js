@@ -54,21 +54,25 @@ app.get('/contact',function(req, res){
 	res.render('contact');
 });
 
-app.get('/semester/:semester/course/:course/year/:year',function(req, res){
-	images.find({"courseKey": req.params.course, "year": req.params.year, active: true})
-	.then((docs)=>{
-		const metadata = {
-			courseName: utils.courses.getNameFromKey(req.params.course),
-			courseKey: req.params.course,
-			year: req.params.year?req.params.year:false,
-			count: docs.length
-		};
+app.get('/semester/:semester/course/:course/year/:year',function(req, res, next){
+	if(utils.courses.keyExists(req.params.course) && utils.yearExists(req.params.year)){
+		images.find({"courseKey": req.params.course, "year": req.params.year, active: true})
+		.then((docs)=>{
+			const metadata = {
+				courseName: utils.courses.getNameFromKey(req.params.course),
+				courseKey: req.params.course,
+				year: req.params.year?req.params.year:false,
+				count: docs.length
+			};
 
-		res.render('gallery', {meta: metadata, images: docs});
-	})
-	.catch((err)=>{
-		res.send(err);
-	});
+			res.render('gallery', {meta: metadata, images: docs});
+		})
+		.catch((err)=>{
+			res.send(err);
+		});
+	} else {
+		next();	//default 404
+	}
 });
 
 app.route('/upload')
