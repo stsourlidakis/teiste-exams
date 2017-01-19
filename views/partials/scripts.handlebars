@@ -38,6 +38,7 @@
 			});
 		}
 
+		/* homepage search */
 		function filterCoursesByStr(str){
 			var courses = $('.course');
 			if(!/\S/.test(str)){	//if the string doesn't have any non-whitespace characters reset the view
@@ -54,6 +55,7 @@
 			});
 		}
 
+		/* show/hide semester containers after search on the homepage based on filtered courses */
 		function hideEmptySemesters(){
 		// first we need to show everything because the parent's visibility affects child's :visible
 			$('.semester').show().each(function(){
@@ -63,6 +65,7 @@
 			});
 		}
 
+		/* after upload form submit spinner */
 		function replaceFormWithSpinner(){
 			$('#photoUploadForm').hide();
 			$('#afterSubmitLoader').show();
@@ -91,6 +94,7 @@
 			$('#imageModal').modal('show');
 		});
 
+		/* selected file output filename shortener */
 		$('#inputImage').on('change', function(){
 			var filename = $(this).val();
 
