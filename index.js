@@ -7,7 +7,8 @@ const express = require('express'),
 	utils = require('./lib/utils');
 
 const images = utils.db.get('images'),
-	semesters = utils.semesters;
+	semesters = utils.semesters,
+	contactMessages = utils.db.get('contactMessages');
 
 var hbs = exphbs.create({
 	defaultLayout: 'main',
@@ -50,9 +51,27 @@ app.get('/about',function(req, res){
 	res.render('about');
 });
 
-app.get('/contact',function(req, res){
-	res.render('contact');
-});
+app.route('/contact')
+	.get(function(req, res){
+		res.render('contact');
+	})
+	.post(utils.multerUpload.fields([]), function(req, res){
+		const data = {
+			name: req.body.name,
+			email: req.body.email,
+			msg: req.body.msg
+		}
+
+		contactMessages.insert(data)
+		.then((docs) => {
+			res.render('contact', {error: false, resultMessage: 'Το μήνυμα αποθηκεύτηκε'});
+		})
+		.catch((err) => {
+			console.log('Error while saving contact message: ', data, 'error: ', err);
+			res.render('contact', {error: true, resultMessage: 'Πρόβλημα κατά την αποθήκευση του μηνύματος, δοκιμάστε ξανά αργότερα'});
+		});
+		
+	})
 
 app.get('/course/:course/year/:year',function(req, res, next){
 	if(utils.courses.keyExists(req.params.course) && (req.params.year==='all') || utils.yearExists(req.params.year)){

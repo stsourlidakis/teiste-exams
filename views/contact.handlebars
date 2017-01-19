@@ -1,4 +1,34 @@
 <div class="container">
 	<h2 class="text-center">Επικοινωνία</h2>
-
+	<form method="post" action="/contact" class="form-horizontal" enctype="multipart/form-data">
+		<fieldset class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<div class="col-md-8 col-md-offset-2 label label-{{#if error}}danger{{else}}success{{/if}}">{{resultMessage}}</div>
+			</div>
+			<div class="form-group">
+				<label for="name" class="col-md-4 control-label">Όνομα (προαιρετικό)</label>
+				<div class="col-md-6">
+					<input class="form-control text-center" name="name" id="name" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="col-md-4 control-label">Email (προαιρετικό)</label>
+				<div class="col-md-6">
+					<input class="form-control text-center" name="email" id="email" type="email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="msg" class="col-md-4 control-label">Μήνυμα</label>
+					<div class="col-md-6">
+						<textarea class="form-control" id="msg" name="msg" required></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-5">
+					<button type="submit" class="btn btn-primary">Αποστολή</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
 </div>
