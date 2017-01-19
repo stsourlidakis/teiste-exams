@@ -9,7 +9,7 @@
     "start": "node index.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "clarifai": "^2.1.0-dev",
     "dotenv": "^2.0.0",
