@@ -55,13 +55,18 @@ app.get('/contact',function(req, res){
 });
 
 app.get('/course/:course/year/:year',function(req, res, next){
-	if(utils.courses.keyExists(req.params.course) && utils.yearExists(req.params.year)){
-		images.find({"courseKey": req.params.course, "year": req.params.year, active: true})
+	if(utils.courses.keyExists(req.params.course) && (req.params.year==='all') || utils.yearExists(req.params.year)){
+		let filter = {"courseKey": req.params.course, active: true};
+		if(req.params.year!=='all'){
+			filter.year = req.params.year;
+		}
+
+		images.find(filter)
 		.then((docs)=>{
 			const metadata = {
 				courseName: utils.courses.getNameFromKey(req.params.course),
 				courseKey: req.params.course,
-				year: req.params.year?req.params.year:false,
+				year: req.params.year!=='all'?req.params.year:'Όλα',
 				count: docs.length
 			};
 

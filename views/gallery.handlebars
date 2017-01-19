@@ -1,7 +1,11 @@
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12">
-			<h2 class="text-center"><strong>{{meta.courseName}}</strong>{{#if meta.year}} {{meta.year}}{{/if}}</h2>
+		<div class="col-xs-12 text-center">
+			<h2>
+				<strong>{{meta.courseName}}</strong>
+				<br>
+				Έτος: {{meta.year}}
+			</h2>
 		</div>
 	</div>
 	{{#each images as |image|}}
