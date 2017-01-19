@@ -20,7 +20,7 @@
 			<div class="form-group">
 				<label for="courseNameInput" class="col-md-4 control-label">Μάθημα</label>
 				<div class="col-md-6">
-					<input class="course-input form-control" name="courseName" id="courseNameInput" placeholder="Πληκτρολογείστε Ελληνικά ή Greeklish" type="text" list="coursesList" required autocomplete="off">
+					<input class="course-input form-control text-center" name="courseName" id="courseNameInput" placeholder="Πληκτρολογείστε Ελληνικά ή Greeklish" type="text" list="coursesList" required autocomplete="off">
 					<datalist id="coursesList">
 					{{#each courses}}
 						<option class="courseAutocompleInput yoyo">{{this.name}}</option>
@@ -32,21 +32,17 @@
 			<div class="form-group">
 				<label for="select" class="col-md-4 control-label">Χρόνος</label>
 				<div class="col-md-6">
-					<select name="year" class="form-control" required>
-						<option value="2010">2010</option>
-						<option value="2011">2011</option>
-						<option value="2012">2012</option>
-						<option value="2013">2013</option>
-						<option value="2014">2014</option>
-						<option value="2015">2015</option>
-						<option value="2016">2016</option>
+					<select name="year" class="form-control text-center" required>
+					{{#each years}}
+						<option value="{{this}}">{{this}}</option>
+					{{/each}}
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="select" class="col-md-4 control-label">Μήνας</label>
 				<div class="col-md-6">
-					<select name="period" class="form-control" required>
+					<select name="period" class="form-control  text-center" required>
 						<option value="Ιανουάριος">Ιανουάριος</option>
 						<option value="Ιούνιος">Ιούνιος</option>
 						<option value="Σεπτέμβριος">Σεπτέμβριος</option>

@@ -7,7 +7,7 @@ const express = require('express'),
 	utils = require('./lib/utils');
 
 const images = utils.db.get('images'),
-	semesters = utils.db.get('semesters');
+	semesters = utils.semesters;
 
 var hbs = exphbs.create({
 	defaultLayout: 'main',
@@ -73,7 +73,7 @@ app.get('/semester/:semester/course/:course/year/:year',function(req, res){
 
 app.route('/upload')
 	.get(function(req, res){
-		res.render('upload', {courses: utils.courses.all});
+		res.render('upload', {courses: utils.courses.all, years: utils.settings.years});
 	})
 	.post(utils.checkUploadedFile, utils.checkRequiredInputs, utils.checkPhotoContent, function(req, res){
 		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH, //delete hash because the album is anonymous
@@ -94,11 +94,11 @@ app.route('/upload')
 		})
 		.then((docs)=>{
 			utils.courseItemIncrease(courseKey, req.body.year);
-			res.render('upload', {error: false, resultMessage: 'Uploaded!', courses: utils.courses.all});
+			res.render('upload', {error: false, resultMessage: 'Uploaded!', courses: utils.courses.all, years: utils.settings.years});
 		})
 		.catch(function (err) {
 			console.log(err);
-			res.render('upload', {error: true, resultMessage: 'Failed!', courses: utils.courses.all});
+			res.render('upload', {error: true, resultMessage: 'Failed!', courses: utils.courses.all, years: utils.settings.years});
 		});
 	});
 
