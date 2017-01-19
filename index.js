@@ -54,7 +54,7 @@ app.get('/contact',function(req, res){
 	res.render('contact');
 });
 
-app.get('/semester/:semester/course/:course/year/:year',function(req, res, next){
+app.get('/course/:course/year/:year',function(req, res, next){
 	if(utils.courses.keyExists(req.params.course) && utils.yearExists(req.params.year)){
 		images.find({"courseKey": req.params.course, "year": req.params.year, active: true})
 		.then((docs)=>{

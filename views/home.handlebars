@@ -33,7 +33,7 @@
 								{{#if course.items}}
 								{{#each course.itemsForYear}}
 									{{#if this}}
-									<a href="/semester/{{semester.key}}/course/{{course.key}}/year/{{@key}}"><li class="list-group-item year">{{@key}} <span class="badge">{{this}}</span></li></a>
+									<a href="/course/{{course.key}}/year/{{@key}}"><li class="list-group-item year">{{@key}} <span class="badge">{{this}}</span></li></a>
 									{{/if}}
 								{{/each}}
 								{{else}}
