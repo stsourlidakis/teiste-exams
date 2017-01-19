@@ -1,8 +1,7 @@
 <div class="container">
-	{{> mainTitle}}
+	<h2 class="text-center">Ανέβασμα Θεμάτων</h2>
 	<form method="post" action="/upload" enctype="multipart/form-data" id="photoUploadForm" class="form-horizontal">
 		<fieldset class="col-md-8 col-md-offset-2">
-			<legend class="text-center">Ανέβασμα Θεμάτων</legend>
 			<div class="form-group">
 				<div id="uploadResultMessage" class="col-md-8 col-md-offset-2 label label-danger"></div>
 				<div class="col-md-8 col-md-offset-2 label label-{{#if error}}danger{{else}}success{{/if}}">{{resultMessage}}</div>
