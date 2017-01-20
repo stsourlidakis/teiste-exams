@@ -37,6 +37,9 @@ app.use('/public', express.static('public'));
 
 imgur.setClientId(process.env.IMGUR_CLIENTID);
 
+app.locals.RECAPTCHA_KEY = process.env.RECAPTCHA_KEY;
+app.locals.useCaptchaOnUploads = utils.settings.useCaptchaOnUploads;
+
 app.get('/',function(req, res){
 	semesters.find({})
 	.then((docs)=>{
@@ -124,7 +127,7 @@ app.route('/upload')
 	.get(function(req, res){
 		res.render('upload', {courses: utils.courses.all, years: utils.settings.years});
 	})
-	.post(utils.checkUploadedFile, utils.checkRequiredInputs, utils.checkPhotoContent, function(req, res){
+	.post(utils.checkUploadedFile, utils.verifyReCaptchaForUpload, utils.checkRequiredInputs, utils.checkPhotoContent, function(req, res){
 		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH, //delete hash because the album is anonymous
 			courseKey = utils.courses.getKeyFromName(req.body.courseName);
 
