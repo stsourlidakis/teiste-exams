@@ -2,6 +2,10 @@
 	display: none;
 }
 
+.no-padding-top{
+	padding-top: 0;
+}
+
 .noItems *{
 	cursor: not-allowed;
 }

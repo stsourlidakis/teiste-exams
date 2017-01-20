@@ -71,9 +71,9 @@ app.route('/contact')
 			res.render('contact', {error: true, resultMessage: 'Πρόβλημα κατά την αποθήκευση του μηνύματος, δοκιμάστε ξανά αργότερα'});
 		});
 		
-	})
+	});
 
-app.get('/course/:course/year/:year',function(req, res, next){
+app.get('/course/:course/year/:year', function(req, res, next){
 	if(utils.courses.keyExists(req.params.course) && (req.params.year==='all') || utils.yearExists(req.params.year)){
 		let filter = {"courseKey": req.params.course, active: true};
 		if(req.params.year!=='all'){
@@ -93,6 +93,27 @@ app.get('/course/:course/year/:year',function(req, res, next){
 		})
 		.catch((err)=>{
 			res.send(err);
+		});
+	} else {
+		next();	//default 404
+	}
+});
+
+app.get('/course/:course/exam/:id', function(req, res, next){
+	if(utils.courses.keyExists(req.params.course) && utils.isValidMongoID(req.params.id)){
+		images.findOne({"courseKey": req.params.course, "_id": req.params.id, active: true})
+		.then((doc)=>{
+			if(doc){
+				const metadata = {
+					courseName: utils.courses.getNameFromKey(doc.courseKey)
+				};
+				res.render('exam', {meta: metadata, image: doc});
+			} else {
+				next();	//default 404
+			}
+		})
+		.catch((err)=>{
+			next();	//default 404
 		});
 	} else {
 		next();	//default 404

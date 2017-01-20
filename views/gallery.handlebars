@@ -12,7 +12,7 @@
 		<div class="col-md-4 col-sm-6">
 			<div class="thumbnail imageModalInvoke">
 				<span class="h4 col-xs-12 text-center">{{image.period}} {{image.year}}</span>
-				<img class="img-responsive" src="{{image.thumbnailUrl}}" data-url="{{image.url}}" alt="{{../meta.courseName}}-{{image.period}}-{{image.year}}" title="{{../meta.courseName}}-{{image.period}}-{{image.year}}">
+				<img class="img-responsive" src="{{image.thumbnailUrl}}" data-url="{{image.url}}" data-permalink="/course/{{image.courseKey}}/exam/{{image._id}}" alt="{{../meta.courseName}}-{{image.period}}-{{image.year}}" title="{{../meta.courseName}}-{{image.period}}-{{image.year}}">
 			</div>
 		</div>
 	{{/each}}
@@ -23,8 +23,12 @@
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<h4 class="modal-title" id="myModalLabel">Δεξί κλικ, "Αποθήκευση εικόνας ως"</h4>
 				</div>
-				<div class="modal-body col-xs-12">
-					<img src="" class="img-responsive" id="imagePreview">
+				<div class="modal-body no-padding-top col-xs-12">
+					<div class="col-xs-12 text-center">
+						<a href="#" id="examPermalink" target="_blank" class="hidden-xs hidden-sm">Άνοιγμα σε νέα καρτέλα</a>
+						<a href="#" id="examPermalinkMobile" class="btn btn-primary hidden-md hidden-lg" target="_blank">Άνοιγμα σε νέα καρτέλα</a>
+					</div>
+					<img src="#" class="img-responsive" id="imagePreview">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

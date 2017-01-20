@@ -90,6 +90,8 @@
 
 		/* gallery image modal */
 		$(".imageModalInvoke").on("click", function() {
+			$('#examPermalink').attr('href', $(this).find('img').data('permalink'));
+			$('#examPermalinkMobile').attr('href', $(this).find('img').data('permalink'));
 			$('#imagePreview').attr('src', $(this).find('img').data('url'));
 			$('#imageModal').modal('show');
 		});
