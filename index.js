@@ -133,9 +133,11 @@ app.route('/upload')
 
 		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
 		.then(function (imgurRes) {
+			const httpsUrl = utils.httpsUrl(imgurRes.data.link);
+			
 			return images.insert({
-				'url': imgurRes.data.link,
-				'thumbnailUrl': thumbnails.medium(imgurRes.data.link),
+				'url': httpsUrl,
+				'thumbnailUrl': thumbnails.medium(httpsUrl),
 				'deleteHash': imgurRes.data.deletehash,
 				'courseKey': courseKey,
 				'year': req.body.year,
