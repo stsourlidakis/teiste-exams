@@ -37,6 +37,7 @@ app.use('/public', express.static('public'));
 
 imgur.setClientId(process.env.IMGUR_CLIENTID);
 
+app.locals.GA_TRACK_ID = process.env.GA_TRACK_ID;
 app.locals.RECAPTCHA_KEY = process.env.RECAPTCHA_KEY;
 app.locals.useCaptchaOnUploads = utils.settings.useCaptchaOnUploads;
 
