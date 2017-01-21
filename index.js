@@ -58,7 +58,7 @@ app.route('/contact')
 	.get(function(req, res){
 		res.render('contact');
 	})
-	.post(utils.multerUpload.fields([]), function(req, res){
+	.post(utils.multerUpload.fields([]), utils.verifyReCaptchaForContact, function(req, res){
 		const data = {
 			name: req.body.name,
 			email: req.body.email,

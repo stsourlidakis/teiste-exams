@@ -19,16 +19,21 @@
 			</div>
 			<div class="form-group">
 				<label for="msg" class="col-md-4 control-label">Μήνυμα</label>
-					<div class="col-md-6">
-						<textarea class="form-control" id="msg" name="msg" required></textarea>
-					</div>
+				<div class="col-md-6">
+					<textarea class="form-control" id="msg" name="msg" required></textarea>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-md-4 col-md-offset-5">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="g-recaptcha" data-sitekey="{{RECAPTCHA_KEY}}"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-md-offset-4">
 					<button type="submit" class="btn btn-primary">Αποστολή</button>
 				</div>
 			</div>
 		</fieldset>
 	</form>
 </div>
+<script src='https://www.google.com/recaptcha/api.js'></script>
