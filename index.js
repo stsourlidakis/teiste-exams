@@ -51,6 +51,23 @@ app.get('/',function(req, res){
 	});
 });
 
+app.get('/all',function(req, res){
+	images.find({active: true})
+	.then((docs)=>{
+		const metadata = {
+			courseName: "Όλα τα μαθήματα",
+			courseKey: '',
+			year: 'Όλα',
+			count: docs.length
+		};
+
+		res.render('gallery', {meta: metadata, images: docs});
+	})
+	.catch((err)=>{
+		res.send(err);
+	});
+});
+
 app.get('/about',function(req, res){
 	res.render('about');
 });
