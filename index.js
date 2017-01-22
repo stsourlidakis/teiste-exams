@@ -47,7 +47,7 @@ app.get('/',function(req, res){
 		res.render('home', {semesters: docs});
 	})
 	.catch((err)=>{
-		res.send(err);
+		utils.sendToErrorPage(err, req, res);
 	});
 });
 
@@ -64,7 +64,7 @@ app.get('/all',function(req, res){
 		res.render('gallery', {meta: metadata, images: docs});
 	})
 	.catch((err)=>{
-		res.send(err);
+		utils.sendToErrorPage(err, req, res);
 	});
 });
 
@@ -113,7 +113,7 @@ app.get('/course/:course/year/:year', function(req, res, next){
 			res.render('gallery', {meta: metadata, images: docs});
 		})
 		.catch((err)=>{
-			res.send(err);
+			utils.sendToErrorPage(err, req, res);
 		});
 	} else {
 		next();	//default 404
@@ -170,6 +170,8 @@ app.route('/upload')
 		})
 		.catch(function (err) {
 			console.log(err);
+			const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+			utils.log500(err, req.originalUrl, req.header('Referer'), ip);
 			res.render('upload', {error: true, resultMessage: 'Failed!', courses: utils.courses.all, years: utils.settings.years});
 		});
 	});
