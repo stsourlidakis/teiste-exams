@@ -166,13 +166,13 @@ app.route('/upload')
 		})
 		.then((docs)=>{
 			utils.courseItemIncrease(courseKey, req.body.year);
-			res.render('upload', {error: false, resultMessage: 'Uploaded!', courses: utils.courses.all, years: utils.settings.years});
+			res.render('upload', {error: false, resultMessage: 'Το θέμα αποθηκεύτηκε!', courses: utils.courses.all, years: utils.settings.years});
 		})
 		.catch(function (err) {
 			console.log(err);
 			const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 			utils.log500(err, req.originalUrl, req.header('Referer'), ip);
-			res.render('upload', {error: true, resultMessage: 'Failed!', courses: utils.courses.all, years: utils.settings.years});
+			res.render('upload', {error: true, resultMessage: 'Κάτι πήγε στραβά, παρακαλώ δοκιμάστε ξανά.', courses: utils.courses.all, years: utils.settings.years});
 		});
 	});
 
