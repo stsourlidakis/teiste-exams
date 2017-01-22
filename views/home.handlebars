@@ -13,7 +13,7 @@
 			<div class="col-xs-12 semester-wrapper">
 				{{#each semester.courses as |course|}}
 
-				{{#ifGroupEveryOpen @index 3}}	<!-- opens a new row tag if needed -->
+				{{#ifGroupEveryOpen @index 3}}	{{!-- opens a new row tag if needed --}}
 				<div class="row">
 				{{/ifGroupEveryOpen}}
 				
@@ -45,7 +45,7 @@
 						</div>
 					</div>
 
-				{{#ifGroupEveryClose @index 3}}	<!-- {{course.name}} closes the previous opened row tag if needed -->
+				{{#ifGroupEveryClose @index 3}}	{{!-- closes the previous opened row tag if needed --}}
 				</div>
 				{{/ifGroupEveryClose}}
 
