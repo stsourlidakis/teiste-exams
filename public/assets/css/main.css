@@ -10,7 +10,7 @@
 	cursor: not-allowed;
 }
 
-.withItems .courseHeader, .imageModalInvoke{
+.cursor-pointer, .withItems .courseHeader, .imageModalInvoke{
 	cursor: pointer;
 }
 
@@ -42,4 +42,13 @@
 
 .awesomplete{
 	display: block;
+}
+
+.btn-donate{
+	padding: 8px 30px;
+	font-size: 23px;
+	color: #465FB7;
+	background-color: #FFC300;
+	border-color: #FFC300;
+	font-weight: 700;
 }
