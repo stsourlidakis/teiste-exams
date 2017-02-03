@@ -53,7 +53,7 @@ app.get('/',function(req, res){
 });
 
 app.get('/all',function(req, res){
-	images.find({active: true})
+	images.find({active: true}, {sort: {_id: -1}})
 	.then((docs)=>{
 		const metadata = {
 			courseName: "Όλα τα μαθήματα",
@@ -102,7 +102,7 @@ app.get('/course/:course/year/:year', function(req, res, next){
 			filter.year = req.params.year;
 		}
 
-		images.find(filter)
+		images.find(filter, {sort: {year: -1}})
 		.then((docs)=>{
 			const metadata = {
 				courseName: utils.courses.getNameFromKey(req.params.course),
