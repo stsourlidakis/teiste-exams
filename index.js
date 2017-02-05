@@ -34,6 +34,7 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use('/public', express.static('public'));
+app.use('/analytics', require('./lib/routes/analytics'));
 
 imgur.setClientId(process.env.IMGUR_CLIENTID);
 

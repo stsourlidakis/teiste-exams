@@ -9,6 +9,26 @@
 <!-- End Cookie Consent plugin -->
 <script>
 	$(document).ready(function(){
+		//analytics for course search
+		if(window.location.pathname == '/'){
+			$('a').on('click', function(){
+				window.goingToCourse = this.href.split('/course/')[1].split('/')[0];
+			});
+			$(window).on("unload", function(){
+				if(window.goingToCourse){	//if the next page is a course log it along with the string the user searched to find the course
+					$.ajax({
+						type: 'POST',
+						dataType: "JSON",
+						url: '/analytics/index/search/',
+						data: {
+							str: $('#courseFilterSearch').val() || 'null',
+							course: window.goingToCourse
+						}
+					});
+				}
+			});
+		}
+
 		/* year list toggle */
 		$('.yearListToggle .courseHeader').on('click', function(){
 			$(this).find('.fa').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
