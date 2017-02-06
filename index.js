@@ -27,6 +27,12 @@ var hbs = exphbs.create({
 			} else {
 				return options.inverse(this);
 			}
+		},
+		getMongoTimestamp: function (id){
+			return id.getTimestamp().toISOString().slice(0,10);
+		},
+		last6FromMD5: function (md5){
+			return md5.substr(md5.length - 6)
 		}
 	}
 });
