@@ -122,7 +122,11 @@
 		$(".imageModalInvoke").on("click", function() {
 			$('#examPermalink').attr('href', $(this).find('img').data('permalink'));
 			$('#examPermalinkMobile').attr('href', $(this).find('img').data('permalink'));
-			$('#imagePreview').attr('src', $(this).find('img').data('url'));
+			if($('#imagePreview').length>0){
+				$('#imagePreview').attr('src', $(this).find('img').data('url'));
+			} else {
+				$('#imageModal').find('.modal-body').append('<img src="'+ $(this).find('img').data('url') +'" class="img-responsive" id="imagePreview">');
+			}
 			$('#imageModal').modal('show');
 		});
 
