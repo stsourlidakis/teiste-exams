@@ -12,22 +12,20 @@
 		//analytics for course search
 		if(window.location.pathname == '/'){
 			var enteredTimestamp = new Date().getTime();
-			$('a').on('click', function(){
+			$('a').on('mousedown', function(e){//if the next page is a course log it along with the string the user searched to find the course & the duration of his stay
+				//mousedown in case of right click->new tab or wheel click for new tab
 				var coursePart = this.href.split('/course/');
 				if(coursePart.length>1){
-					window.goingToCourse = coursePart[1].split('/')[0];
-				}
-			});
-			$(window).on("unload", function(){
-				if(window.goingToCourse){	//if the next page is a course log it along with the string the user searched to find the course & the duration of his stay
+					var goingToCourse = coursePart[1].split('/')[0];
 					var duration = ( (new Date().getTime() - enteredTimestamp)/1000 ).toFixed(0);
+
 					$.ajax({
 						type: 'POST',
 						dataType: "JSON",
 						url: '/analytics/index/search/',
 						data: {
 							str: $('#courseFilterSearch').val() || 'null',
-							courseKey: window.goingToCourse,
+							courseKey: goingToCourse,
 							duration: duration
 						}
 					});
