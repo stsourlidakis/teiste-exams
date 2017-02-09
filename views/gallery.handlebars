@@ -12,6 +12,9 @@
 		<div class="col-md-4 col-sm-6">
 			<div class="thumbnail imageModalInvoke">
 				<span class="h4 col-xs-12 text-center">{{image.period}} {{image.year}}</span>
+				<noscript>
+					<a class="col-xs-12 text-center" href="/course/{{image.courseKey}}/exam/{{image._id}}">Permalink</a>
+				</noscript>
 				<img class="img-responsive" src="{{image.thumbnailUrl}}" data-url="{{image.url}}" data-permalink="/course/{{image.courseKey}}/exam/{{image._id}}" alt="{{../meta.courseName}}-{{image.period}}-{{image.year}}" title="{{../meta.courseName}}-{{image.period}}-{{image.year}}">
 			</div>
 		</div>

@@ -1,5 +1,15 @@
 <div class="container">
 	<h2 class="text-center">Ανέβασμα Θεμάτων</h2>
+	<noscript>
+		<style>
+			#photoUploadForm, #afterSubmitLoader{
+				display: none;
+			}
+		</style>
+		<h3 class="text-center text-danger">
+			Για να ανεβάσετε θέματα απαιτείται JavaScript <i class="fa fa-frown-o" aria-hidden="true"></i>
+		</h3>
+	</noscript>
 	<form method="post" action="/upload" enctype="multipart/form-data" id="photoUploadForm" class="form-horizontal">
 		<fieldset class="col-md-8 col-md-offset-2">
 			<div class="form-group">
