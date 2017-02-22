@@ -1,0 +1,38 @@
+<div class="container">
+	<ul class="breadcrumb">
+		<li><a href="/analytics/list">Analytics</a></li>
+		<li class="active">Rejected images</li>
+	</ul>
+	<h1 class="text-center">Rejected images Analytics</h1>
+	<hr>
+	<div class="col-sm-12">
+		<table class="table table-striped table-hover text-center">
+			<thead>
+				<tr class="h4">
+					<th class="text-center">#</th>
+					<th class="text-center">Image</th>
+					<th class="text-center">False positive</th>
+					<th class="text-center">Missing tags</th>
+					<th class="text-center">User</th>
+					<th class="text-center">Date</th>
+				</tr>
+			</thead>
+			<tbody>
+			{{#each rejectedImages as |item|}}
+				<tr>
+					<td>{{@index}}</td>
+					<td style="background: #{{last6FromMD5 item.imageFingerprint}};">{{last6FromMD5 item.imageFingerprint}}</td>
+					<td>
+					{{#if item.falsePositive}}
+						<i class="text-danger fa fa-times" aria-hidden="true"></i>
+					{{/if}}
+					</td>
+					<td>{{item.missingTags}}</td>
+					<td style="background: #{{last6FromMD5 item.userFingerprint}};">{{last6FromMD5 item.userFingerprint}}</td>
+					<td>{{getMongoTimestamp item._id}}</td>
+				</tr>
+			{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
