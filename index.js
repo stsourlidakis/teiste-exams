@@ -186,8 +186,7 @@ app.route('/upload')
 
 app.use(function (req, res, next) {	//default 404
 	if(utils.settings.log404 && req.originalUrl != '/favicon.ico'){
-		const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		utils.log404(req.originalUrl, req.header('Referer'), ip);
+		utils.log404(req);
 	}
 
 	res.status(404).render("404");
