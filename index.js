@@ -177,9 +177,9 @@ app.route('/upload')
 			res.render('upload', {error: false, resultMessage: 'Το θέμα αποθηκεύτηκε!', courses: utils.courses.all, years: utils.settings.years});
 		})
 		.catch(function (err) {
-			console.log(err);
-			const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-			utils.log500(err, req.originalUrl, req.header('Referer'), ip);
+			if(utils.settings.log500){
+				utils.log500(err, req);
+			}
 			res.render('upload', {error: true, resultMessage: 'Κάτι πήγε στραβά, παρακαλώ δοκιμάστε ξανά.', courses: utils.courses.all, years: utils.settings.years});
 		});
 	});
