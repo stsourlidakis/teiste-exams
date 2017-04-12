@@ -48,6 +48,7 @@ app.locals.GA_TRACK_ID = process.env.GA_TRACK_ID;
 app.locals.RECAPTCHA_KEY = process.env.RECAPTCHA_KEY;
 app.locals.PAYPAL_DONATE_ID = process.env.PAYPAL_DONATE_ID;
 app.locals.useCaptchaOnUploads = utils.settings.useCaptchaOnUploads;
+app.locals.serverStarted = new Date().toGMTString();
 
 app.get('/',function(req, res){
 	semesters.find({})
