@@ -18,7 +18,7 @@
     "express-handlebars": "^3.0.0",
     "express-recaptcha": "^2.1.0",
     "https-url": "^1.0.0",
-    "imgur": "^0.2.0",
+    "imgur": "^0.3.1",
     "imgur-thumbnails": "^1.1.0",
     "monk": "^3.1.2",
     "multer": "^1.2.0"
