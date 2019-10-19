@@ -20,7 +20,7 @@
     "https-url": "^1.0.0",
     "imgur": "^0.3.1",
     "imgur-thumbnails": "^1.1.0",
-    "monk": "^3.1.2",
+    "monk": "^7.0.0",
     "multer": "^1.2.0"
   },
   "devDependencies": {
