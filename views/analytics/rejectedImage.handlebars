@@ -29,7 +29,7 @@
 					</td>
 					<td>{{item.missingTags}}</td>
 					<td style="background: #{{last6FromMD5 item.userFingerprint}};">{{last6FromMD5 item.userFingerprint}}</td>
-					<td>{{getMongoTimestamp item._id}}</td>
+					<td title="{{getLocaleTimestampFromObjectId item._id}}">{{getMongoTimestamp item._id}}</td>
 				</tr>
 			{{/each}}
 			</tbody>

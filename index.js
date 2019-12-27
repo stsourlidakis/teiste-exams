@@ -28,6 +28,9 @@ var hbs = exphbs.create({
 				return options.inverse(this);
 			}
 		},
+		getLocaleTimestampFromObjectId: function (id){
+			return id.getTimestamp().toLocaleString();
+		},
 		getMongoTimestamp: function (id){
 			return id.getTimestamp().toISOString().slice(0,10);
 		},
