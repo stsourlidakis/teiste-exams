@@ -31,7 +31,7 @@ var hbs = exphbs.create({
 		getLocaleTimestampFromObjectId: function (id){
 			return id.getTimestamp().toLocaleString();
 		},
-		getMongoTimestamp: function (id){
+		getDateFromObjectId: function (id){
 			return id.getTimestamp().toISOString().slice(0,10);
 		},
 		last6FromMD5: function (md5){

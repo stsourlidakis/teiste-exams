@@ -25,7 +25,7 @@
 					<td {{#if item.str}}class="success"{{/if}}>{{item.str}}</td>
 					<td>{{item.duration}}</td>
 					<td style="background: #{{last6FromMD5 item.fingerprint}};">{{last6FromMD5 item.fingerprint}}</td>
-					<td title="{{getLocaleTimestampFromObjectId item._id}}">{{getMongoTimestamp item._id}}</td>
+					<td title="{{getLocaleTimestampFromObjectId item._id}}">{{getDateFromObjectId item._id}}</td>
 				</tr>
 			{{/each}}
 			</tbody>
