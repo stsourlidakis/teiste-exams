@@ -54,7 +54,7 @@ app.locals.useCaptchaOnUploads = utils.settings.useCaptchaOnUploads;
 app.locals.serverStarted = new Date().toGMTString();
 
 app.get('/',function(req, res){
-	semesters.find({})
+	semesters.find({}, {sort: {_id: 1}})
 	.then((docs)=>{
 		res.render('home', {semesters: docs});
 	})
@@ -103,7 +103,7 @@ app.route('/contact')
 			console.log('Error while saving contact message: ', data, 'error: ', err);
 			res.render('contact', {error: true, resultMessage: 'Πρόβλημα κατά την αποθήκευση του μηνύματος, δοκιμάστε ξανά αργότερα'});
 		});
-		
+
 	});
 
 app.get('/course/:course/year/:year', function(req, res, next){
@@ -164,7 +164,7 @@ app.route('/upload')
 		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
 		.then(function (imgurRes) {
 			const httpsUrl = utils.httpsUrl(imgurRes.data.link);
-			
+
 			return images.insert({
 				'url': httpsUrl,
 				'thumbnailUrl': thumbnails.medium(httpsUrl),
