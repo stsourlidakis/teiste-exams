@@ -1,144 +1,182 @@
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous"
+></script>
 <script src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script>
 <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
 <script type="text/javascript">
-	window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-bottom"};
+  window.cookieconsent_options = {
+    message:
+      'This website uses cookies to ensure you get the best experience on our website',
+    dismiss: 'Got it!',
+    learnMore: 'More info',
+    link: null,
+    theme: 'dark-bottom',
+  };
 </script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+<script
+  type="text/javascript"
+  src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"
+></script>
 <!-- End Cookie Consent plugin -->
 <script>
-	$(document).ready(function(){
-		//analytics for course search
-		if(window.location.pathname == '/'){
-			var enteredTimestamp = new Date().getTime();
-			$('a').on('mousedown', function(e){//if the next page is a course log it along with the string the user searched to find the course & the duration of his stay
-				//mousedown in case of right click->new tab or wheel click for new tab
-				var coursePart = this.href.split('/course/');
-				if(coursePart.length>1){
-					var goingToCourse = coursePart[1].split('/')[0];
-					var duration = ( (new Date().getTime() - enteredTimestamp)/1000 ).toFixed(0);
+  $(document).ready(function () {
+    //analytics for course search
+    if (window.location.pathname == '/') {
+      var enteredTimestamp = new Date().getTime();
+      $('a').on('mousedown', function (e) {
+        //if the next page is a course log it along with the string the user searched to find the course & the duration of his stay
+        //mousedown in case of right click->new tab or wheel click for new tab
+        var coursePart = this.href.split('/course/');
+        if (coursePart.length > 1) {
+          var goingToCourse = coursePart[1].split('/')[0];
+          var duration = (
+            (new Date().getTime() - enteredTimestamp) /
+            1000
+          ).toFixed(0);
 
-					$.ajax({
-						type: 'POST',
-						dataType: "JSON",
-						url: '/analytics/index/search/',
-						data: {
-							str: $('#courseFilterSearch').val() || 'null',
-							courseKey: goingToCourse,
-							duration: duration
-						}
-					});
-				}
-			});
-		}
+          $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            url: '/analytics/index/search/',
+            data: {
+              str: $('#courseFilterSearch').val() || 'null',
+              courseKey: goingToCourse,
+              duration: duration,
+            },
+          });
+        }
+      });
+    }
 
-		/* year list toggle */
-		$('.yearListToggle .courseHeader').on('click', function(){
-			$(this).find('.fa').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
-			$(this).closest('.course').find('.yearList').fadeToggle();
-		});
+    /* year list toggle */
+    $('.yearListToggle .courseHeader').on('click', function () {
+      $(this)
+        .find('.fa')
+        .toggleClass('fa-caret-down')
+        .toggleClass('fa-caret-up');
+      $(this).closest('.course').find('.yearList').fadeToggle();
+    });
 
-		/* index course search */
-		$('#courseFilterSearch').on('input propertychange', function(){
-			filterCoursesByStr($(this).val());
-			hideEmptySemesters();
-		});
+    /* index course search */
+    $('#courseFilterSearch').on('input propertychange', function () {
+      filterCoursesByStr($(this).val());
+      hideEmptySemesters();
+    });
 
-		/* courses autocomplete */
-		if($('input.course-input').length!=0){
-			var comboplete = new Awesomplete('input.course-input', {
-				minChars: 0,
-				maxItems: 67,
-				sort: function(a, b){	//we want greek words first
-					return a.label[0]<b.label[0]?1:-1;
-				}
-			});
-			Awesomplete.$('.course-input').addEventListener("click", function() {
-				if (comboplete.ul.childNodes.length === 0) {
-					comboplete.minChars = 0;
-					comboplete.evaluate();
-				}
-				else if (comboplete.ul.hasAttribute('hidden')) {
-					comboplete.open();
-				}
-				else {
-					comboplete.close();
-				}
-			});
-		}
+    /* courses autocomplete */
+    if ($('input.course-input').length != 0) {
+      var comboplete = new Awesomplete('input.course-input', {
+        minChars: 0,
+        maxItems: 67,
+        sort: function (a, b) {
+          //we want greek words first
+          return a.label[0] < b.label[0] ? 1 : -1;
+        },
+      });
+      Awesomplete.$('.course-input').addEventListener('click', function () {
+        if (comboplete.ul.childNodes.length === 0) {
+          comboplete.minChars = 0;
+          comboplete.evaluate();
+        } else if (comboplete.ul.hasAttribute('hidden')) {
+          comboplete.open();
+        } else {
+          comboplete.close();
+        }
+      });
+    }
 
-		/* homepage search */
-		function filterCoursesByStr(str){
-			var courses = $('.course');
-			if(!/\S/.test(str)){	//if the string doesn't have any non-whitespace characters reset the view
-				courses.show();
-				return;
-			}
-			var filter = new RegExp(str, 'i');
-			courses.each(function(){
-				if(filter.test($(this).data('tags'))){
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
-			});
-		}
+    /* homepage search */
+    function filterCoursesByStr(str) {
+      var courses = $('.course');
+      if (!/\S/.test(str)) {
+        //if the string doesn't have any non-whitespace characters reset the view
+        courses.show();
+        return;
+      }
+      var filter = new RegExp(str, 'i');
+      courses.each(function () {
+        if (filter.test($(this).data('tags'))) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    }
 
-		/* show/hide semester containers after search on the homepage based on filtered courses */
-		function hideEmptySemesters(){
-		// first we need to show everything because the parent's visibility affects child's :visible
-			$('.semester').show().each(function(){
-				if(!$(this).find('.course:visible').length>0){
-					$(this).hide();
-				}
-			});
-		}
+    /* show/hide semester containers after search on the homepage based on filtered courses */
+    function hideEmptySemesters() {
+      // first we need to show everything because the parent's visibility affects child's :visible
+      $('.semester')
+        .show()
+        .each(function () {
+          if (!$(this).find('.course:visible').length > 0) {
+            $(this).hide();
+          }
+        });
+    }
 
-		/* after upload form submit spinner */
-		function replaceFormWithSpinner(){
-			$('#photoUploadForm').hide();
-			$('#afterSubmitLoader').show();
-		}
+    /* after upload form submit spinner */
+    function replaceFormWithSpinner() {
+      $('#photoUploadForm').hide();
+      $('#afterSubmitLoader').show();
+    }
 
-		/* test the user submited course name before submiting the form */
-		$('#photoUploadForm').on('submit', function(){
-			var userCourseName = $('#courseNameInput').val();
-			var submit = false;
-			$('.courseAutocompleInput').each(function(){
-				if($(this).text() == userCourseName){
-					submit = true;
-				}
-			});
-			if(!submit){
-				$('#uploadResultMessage').addClass('.error').text('Επιλέξτε ένα μάθημα απο την λίστα');
-			} else {
-				replaceFormWithSpinner();
-			}
-			return submit;
-		});
+    /* test the user submited course name before submiting the form */
+    $('#photoUploadForm').on('submit', function () {
+      var userCourseName = $('#courseNameInput').val();
+      var submit = false;
+      $('.courseAutocompleInput').each(function () {
+        if ($(this).text() == userCourseName) {
+          submit = true;
+        }
+      });
+      if (!submit) {
+        $('#uploadResultMessage')
+          .addClass('.error')
+          .text('Επιλέξτε ένα μάθημα απο την λίστα');
+      } else {
+        replaceFormWithSpinner();
+      }
+      return submit;
+    });
 
-		/* gallery image modal */
-		$(".imageModalInvoke").on("click", function() {
-			$('#examPermalink').attr('href', $(this).find('img').data('permalink'));
-			$('#examPermalinkMobile').attr('href', $(this).find('img').data('permalink'));
-			if($('#imagePreview').length>0){
-				$('#imagePreview').attr('src', $(this).find('img').data('url'));
-			} else {
-				$('#imageModal').find('.modal-body').append('<img src="'+ $(this).find('img').data('url') +'" class="img-responsive" id="imagePreview">');
-			}
-			$('#imageModal').modal('show');
-		});
+    /* gallery image modal */
+    $('.imageModalInvoke').on('click', function () {
+      $('#examPermalink').attr('href', $(this).find('img').data('permalink'));
+      $('#examPermalinkMobile').attr(
+        'href',
+        $(this).find('img').data('permalink')
+      );
+      if ($('#imagePreview').length > 0) {
+        $('#imagePreview').attr('src', $(this).find('img').data('url'));
+      } else {
+        $('#imageModal')
+          .find('.modal-body')
+          .append(
+            '<img src="' +
+              $(this).find('img').data('url') +
+              '" class="img-responsive" id="imagePreview">'
+          );
+      }
+      $('#imageModal').modal('show');
+    });
 
-		/* selected file output filename shortener */
-		$('#inputImage').on('change', function(){
-			var filename = $(this).val();
+    /* selected file output filename shortener */
+    $('#inputImage').on('change', function () {
+      var filename = $(this).val();
 
-			if( filename.length>20 ){
-				filename = filename.slice(0, 10) + '...' + filename.slice(-10);
-			}
+      if (filename.length > 20) {
+        filename = filename.slice(0, 10) + '...' + filename.slice(-10);
+      }
 
-			$('#upload-file-info').html(filename);
-		});
-	});
+      $('#upload-file-info').html(filename);
+    });
+  });
 </script>

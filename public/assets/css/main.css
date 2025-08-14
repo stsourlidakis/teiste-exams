@@ -1,59 +1,63 @@
-.initHidden{
-	display: none;
+.initHidden {
+  display: none;
 }
 
-.no-padding-top{
-	padding-top: 0;
+.no-padding-top {
+  padding-top: 0;
 }
 
-.noItems *{
-	cursor: not-allowed;
+.noItems * {
+  cursor: not-allowed;
 }
 
-.cursor-pointer, .withItems .courseHeader, .imageModalInvoke{
-	cursor: pointer;
+.cursor-pointer,
+.withItems .courseHeader,
+.imageModalInvoke {
+  cursor: pointer;
 }
 
-.noItems .courseHeader .fa-caret-down, .noItems .courseHeader .fa-caret-up{
-	color: #d9534f;
+.noItems .courseHeader .fa-caret-down,
+.noItems .courseHeader .fa-caret-up {
+  color: #d9534f;
 }
 
-.withItems .courseHeader .fa-caret-down, .withItems .courseHeader .fa-caret-up{
-	color: #428bca;
+.withItems .courseHeader .fa-caret-down,
+.withItems .courseHeader .fa-caret-up {
+  color: #428bca;
 }
 
-.noItems .courseHeader .badge{
-	background: #d9534f;
+.noItems .courseHeader .badge {
+  background: #d9534f;
 }
 
-.yearList .year:hover{
-	background: #2780E3;
-	color: #eee;
+.yearList .year:hover {
+  background: #2780e3;
+  color: #eee;
 }
-.yearList .year:hover .badge{
-	background: #fff;
-	color: #2780E3;
-}
-
-.semester-wrapper{
-	background: #e6e6e6;
-	padding: 25px 32px 5px 32px;
+.yearList .year:hover .badge {
+  background: #fff;
+  color: #2780e3;
 }
 
-.awesomplete{
-	display: block;
+.semester-wrapper {
+  background: #e6e6e6;
+  padding: 25px 32px 5px 32px;
 }
 
-.btn-donate{
-	padding: 8px 30px;
-	font-size: 23px;
-	color: #465FB7;
-	background-color: #FFC300;
-	border-color: #FFC300;
-	font-weight: 700;
+.awesomplete {
+  display: block;
 }
 
-#notification-wrapper{
-	background: #222222;
-	color: #eee;
+.btn-donate {
+  padding: 8px 30px;
+  font-size: 23px;
+  color: #465fb7;
+  background-color: #ffc300;
+  border-color: #ffc300;
+  font-weight: 700;
+}
+
+#notification-wrapper {
+  background: #222222;
+  color: #eee;
 }

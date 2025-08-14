@@ -1,57 +1,74 @@
 <div class="container-fluid">
-	{{> mainTitle}}
-	<div class="input-group col-md-6 col-md-offset-3">
-		<input type="text" id="courseFilterSearch" class="form-control input-lg" placeholder="Όνομα μαθήματος (Ελληνικά/Greeklish)" autocomplete="off" autofocus />
-		<span class="input-group-addon">
-			<i class="fa fa-search"></i>
-		</span>
-	</div>
-	<div class="row text-center">
-		{{#each semesters as |semester|}}
-		<div class="semester col-xs-12">
-			<h2 class="col-xs-12">{{semester.name}}</h2>
-			<div class="col-xs-12 semester-wrapper">
-				{{#each semester.courses as |course|}}
+  {{> mainTitle}}
+  <div class="input-group col-md-6 col-md-offset-3">
+    <input
+      type="text"
+      id="courseFilterSearch"
+      class="form-control input-lg"
+      placeholder="Όνομα μαθήματος (Ελληνικά/Greeklish)"
+      autocomplete="off"
+      autofocus
+    />
+    <span class="input-group-addon">
+      <i class="fa fa-search"></i>
+    </span>
+  </div>
+  <div class="row text-center">
+    {{#each semesters as |semester|}}
+    <div class="semester col-xs-12">
+      <h2 class="col-xs-12">{{semester.name}}</h2>
+      <div class="col-xs-12 semester-wrapper">
+        {{#each semester.courses as |course|}} {{#ifGroupEveryOpen @index 3}}
+        {{!-- opens a new row tag if needed --}}
+        <div class="row">
+          {{/ifGroupEveryOpen}}
 
-				{{#ifGroupEveryOpen @index 3}}	{{!-- opens a new row tag if needed --}}
-				<div class="row">
-				{{/ifGroupEveryOpen}}
-				
-					<div class="course panel panel-default yearListToggle {{#if course.items}}withItems{{else}}noItems{{/if}} col-md-4" data-tags="{{course.searchStr}}">
-						<div class="row">
-							<div class="courseHeader panel-title panel-heading col-xs-12">
-								<span class="courseName">{{course.name}}</span>
-								<div class="pull-right">
-									<span class="badge">{{course.items}}</span>
-									<span>
-										<i class="fa fa-caret-down" aria-hidden="true"></i>
-									</span>
-								</div>
-							</div>
-							<div class="yearList initHidden col-xs-12 panel-body">
-								<ul class="list-group list-unstyled">
-								{{#if course.items}}
-									<li><a class="list-group-item year" href="/course/{{course.key}}/year/all">Όλα τα έτη<span class="badge">{{course.items}}</span></a></li>
-									{{#each course.itemsForYear}}
-									{{#if this}}
-									<li><a class="list-group-item year" href="/course/{{course.key}}/year/{{@key}}">{{@key}} <span class="badge">{{this}}</span></a></li>
-									{{/if}}
-									{{/each}}
-								{{else}}
-									<li class="list-group-item">Δεν υπάρχουν θέματα</li>
-								{{/if}}
-								</ul>
-							</div>
-						</div>
-					</div>
+          <div
+            class="course panel panel-default yearListToggle {{#if course.items}}withItems{{else}}noItems{{/if}} col-md-4"
+            data-tags="{{course.searchStr}}"
+          >
+            <div class="row">
+              <div class="courseHeader panel-title panel-heading col-xs-12">
+                <span class="courseName">{{course.name}}</span>
+                <div class="pull-right">
+                  <span class="badge">{{course.items}}</span>
+                  <span>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="yearList initHidden col-xs-12 panel-body">
+                <ul class="list-group list-unstyled">
+                  {{#if course.items}}
+                  <li>
+                    <a
+                      class="list-group-item year"
+                      href="/course/{{course.key}}/year/all"
+                      >Όλα τα έτη<span class="badge">{{course.items}}</span></a
+                    >
+                  </li>
+                  {{#each course.itemsForYear}} {{#if this}}
+                  <li>
+                    <a
+                      class="list-group-item year"
+                      href="/course/{{course.key}}/year/{{@key}}"
+                      >{{@key}} <span class="badge">{{this}}</span></a
+                    >
+                  </li>
+                  {{/if}} {{/each}} {{else}}
+                  <li class="list-group-item">Δεν υπάρχουν θέματα</li>
+                  {{/if}}
+                </ul>
+              </div>
+            </div>
+          </div>
 
-				{{#ifGroupEveryClose @index 3}}	{{!-- closes the previous opened row tag if needed --}}
-				</div>
-				{{/ifGroupEveryClose}}
-
-				{{/each}}
-			</div>
-		</div>
-		{{/each}}
-	</div>
+          {{#ifGroupEveryClose @index 3}} {{!-- closes the previous opened row
+          tag if needed --}}
+        </div>
+        {{/ifGroupEveryClose}} {{/each}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
 </div>

@@ -1,8 +1,8 @@
 {
-	"name": "pente",
-	"script": "index.js",
-	"watch": ["./"],
-	"watch_options": {
-		"followSymlinks": false
-	}
+  "name": "pente",
+  "script": "index.js",
+  "watch": ["./"],
+  "watch_options": {
+    "followSymlinks": false
+  }
 }
