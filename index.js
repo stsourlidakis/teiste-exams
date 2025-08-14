@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express'),
 	app = express(),
-	imgur = require('imgur'),
+	{ ImgurClient } = require('imgur'),
 	thumbnails = require('imgur-thumbnails'),
 	exphbs = require('express-handlebars'),
 	utils = require('./lib/utils');
@@ -45,7 +45,7 @@ app.set('view engine', 'handlebars');
 app.use('/public', express.static('public'));
 app.use('/analytics', require('./lib/routes/analytics'));
 
-imgur.setClientId(process.env.IMGUR_CLIENTID);
+const imgur = new ImgurClient({ clientId: process.env.IMGUR_CLIENTID });
 
 app.locals.GA_TRACK_ID = process.env.GA_TRACK_ID;
 app.locals.RECAPTCHA_KEY = process.env.RECAPTCHA_KEY;
@@ -161,7 +161,11 @@ app.route('/upload')
 		const albumId = process.env.IMGUR_ALBUM_DELETE_HASH, //delete hash because the album is anonymous
 			courseKey = utils.courses.getKeyFromName(req.body.courseName);
 
-		imgur.uploadBase64(req.file.buffer.toString('base64'), albumId )
+		imgur.upload({
+			image: req.file.buffer.toString('base64'),
+			type: 'base64',
+			album: albumId
+		})
 		.then(function (imgurRes) {
 			const httpsUrl = utils.httpsUrl(imgurRes.data.link);
 
