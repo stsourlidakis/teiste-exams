@@ -122,7 +122,7 @@ app
 app.get('/course/:course/year/:year', async function (req, res, next) {
   if (
     (utils.courses.keyExists(req.params.course) && req.params.year === 'all') ||
-    utils.yearExists(req.params.year)
+    utils.isValidYear(req.params.year)
   ) {
     let filter = { courseKey: req.params.course, active: true };
     if (req.params.year !== 'all') {
@@ -180,7 +180,8 @@ app
   .get(function (req, res) {
     res.render('upload', {
       courses: utils.courses.all,
-      years: utils.settings.years,
+      startingYear: utils.settings.startingYear,
+      currentYear: new Date().getFullYear(),
     });
   })
   .post(
@@ -217,7 +218,8 @@ app
           error: false,
           resultMessage: 'Το θέμα αποθηκεύτηκε!',
           courses: utils.courses.all,
-          years: utils.settings.years,
+          startingYear: utils.settings.startingYear,
+          currentYear: new Date().getFullYear(),
         });
       } catch (err) {
         if (utils.settings.log500) {
@@ -227,7 +229,8 @@ app
           error: true,
           resultMessage: 'Κάτι πήγε στραβά, παρακαλώ δοκιμάστε ξανά.',
           courses: utils.courses.all,
-          years: utils.settings.years,
+          startingYear: utils.settings.startingYear,
+          currentYear: new Date().getFullYear(),
         });
       }
     }

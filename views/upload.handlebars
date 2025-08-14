@@ -79,11 +79,15 @@
       <div class="form-group">
         <label for="select" class="col-md-4 control-label">Χρόνος</label>
         <div class="col-md-6">
-          <select name="year" class="form-control text-center" required>
-            {{#each years}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-          </select>
+          <input
+            type="number"
+            name="year"
+            class="form-control text-center"
+            min="{{startingYear}}"
+            max="{{currentYear}}"
+            value="{{currentYear}}"
+            required
+          />
         </div>
       </div>
       <div class="form-group">
