@@ -103,7 +103,7 @@ app
 
       contactMessages
         .insert(data)
-        .then((docs) => {
+        .then(() => {
           res.render('contact', {
             error: false,
             resultMessage: 'Το μήνυμα αποθηκεύτηκε',
@@ -176,7 +176,7 @@ app.get('/course/:course/exam/:id', function (req, res, next) {
           next(); //default 404
         }
       })
-      .catch((err) => {
+      .catch(() => {
         next(); //default 404
       });
   } else {
@@ -221,7 +221,7 @@ app
             uploader: utils.settings.defaultUploaderName,
           });
         })
-        .then((docs) => {
+        .then(() => {
           utils.courseItemIncrease(courseKey, req.body.year);
           res.render('upload', {
             error: false,
@@ -244,7 +244,7 @@ app
     }
   );
 
-app.use(function (req, res, next) {
+app.use(function (req, res) {
   //default 404
   if (utils.settings.log404 && req.originalUrl != '/favicon.ico') {
     utils.log404(req);
