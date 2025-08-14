@@ -170,9 +170,8 @@
 
     /* selected file output filename shortener */
     $('#inputImage').on('change', function () {
-      var filename = $(this).val();
-
-      if (filename.length > 20) {
+      let filename = this.files[0].name;
+      if (filename.length > 23) {
         filename = filename.slice(0, 10) + '...' + filename.slice(-10);
       }
 
