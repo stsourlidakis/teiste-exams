@@ -1,16 +1,16 @@
 require('dotenv').config();
-const express = require('express'),
-  app = express(),
-  { ImgurClient } = require('imgur'),
-  thumbnails = require('imgur-thumbnails'),
-  exphbs = require('express-handlebars'),
-  utils = require('./lib/utils');
+const express = require('express');
+const app = express();
+const { ImgurClient } = require('imgur');
+const thumbnails = require('imgur-thumbnails');
+const exphbs = require('express-handlebars');
+const utils = require('./lib/utils');
 
-const images = utils.db.get('images'),
-  semesters = utils.semesters,
-  contactMessages = utils.db.get('contactMessages');
+const images = utils.db.get('images');
+const semesters = utils.semesters;
+const contactMessages = utils.db.get('contactMessages');
 
-var hbs = exphbs.create({
+const hbs = exphbs.create({
   defaultLayout: 'main',
   partialsDir: ['views/partials/'],
   helpers: {
@@ -198,8 +198,8 @@ app
     utils.checkRequiredInputs,
     utils.checkPhotoContent,
     function (req, res) {
-      const albumId = process.env.IMGUR_ALBUM_DELETE_HASH, //delete hash because the album is anonymous
-        courseKey = utils.courses.getKeyFromName(req.body.courseName);
+      const albumId = process.env.IMGUR_ALBUM_DELETE_HASH; //delete hash because the album is anonymous
+      const courseKey = utils.courses.getKeyFromName(req.body.courseName);
 
       imgur
         .upload({
