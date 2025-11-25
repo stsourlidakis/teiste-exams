@@ -15,7 +15,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^2.2.0",
+    "body-parser": "^2.2.1",
     "clarifai-nodejs": "^0.2.1",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
